@@ -24,9 +24,19 @@
   //getUsername --> which is a function that returns the current object's username property. *Don't use 'user' instead use the 'this' keyword*
 
     //Code Here
+function getUsername () {
+    return this.username;
+}
+
+
+var user = {
+    username: 'jboucher',
+    email: 'jboucher@email.com',
+    getUsername: getUsername //MAKE sure you add the function to the object so you can invoke it
+}
 
 //Now, invoke the getUsername method and verify you got the username of the object and not anything else.
-
+user.getUsername();
 
 //Next Problem
 
@@ -34,14 +44,30 @@
 // Write a constructor function, including method definitions, which will make the following function invocations function properly.
 
   //Function Invocations Here
+function Car (make, model, year, miles) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.miles = miles;
+}
 
-var prius = new Car('Toyota', 'Prius', 2011);
-var mustang = new Car('Ford', 'Mustang', 2013);
+var prius = new Car('Toyota', 'Prius', 2011, 0);
+var mustang = new Car('Ford', 'Mustang', 2013, 0);
 
-//Hint, you'll need to add a move property, with a starting value of zero, and write a moveCar function which will increment the move property by 10. The move property will be added to every object that is being returned from the Car function. You'll also need to use the 'this' keyword properly in order to make sure you're invoking moveCar on the right object (prius vs mustang).
+//Hint, you'll need to add a move property, with a starting value of zero, and write a moveCar function which will 
+//increment the move property by 10. The move property will be added to every object that is being returned from 
+//the Car function. You'll also need to use the 'this' keyword properly in order to make sure you're invoking 
+//moveCar on the right object (prius vs mustang).
 
-prius.moveCar(); //increments prius' move property by 10. Returns the new move property.
-mustang.moveCar(); //increments mustang' move property by 10. Returns the new move property.
+function move (num) {
+    return this.miles += num;
+}
+
+Car.prototype.moveCar = move;
+
+prius.moveCar(10); //increments prius' move property by 10. Returns the new move property.
+mustang.moveCar(10); //increments mustang' move property by 10. Returns the new move property.
+// prius.miles;
 
 
 
@@ -55,29 +81,35 @@ var getYear = function(){
 
 //Note(no tests)
   //Code Here
-
+prius.year;
+mustang.year;
 
 //New Problem
 
 var myUser = {
  username: 'iliketurtles',
  age: 13,
- email: 'iliketurtles@gmail.com'
+ email: 'iliketurtles@gmail.com',
+ getMyUsername: getMyUsername
 };
 
-var getMyUsername = function() {
+// var getMyUsername = function() {
+//  return this.username;
+// };
+
+function getMyUsername () {
  return this.username;
 };
 
-var userName = getMyUsername(); //Fix this
+var userName = myUser.getMyUsername(); //Fix this
 
 //Above you're given an object, and  a function. What will the getMyUsername function return?
 //Note(no tests)
-  //Answer Here
+  //Answer Here - iliketurtles
 
 //In the example above, what is the 'this keyword' bound to when getMyUsername runs?
 
-  //Answer Here
+  //Answer Here - its bound to the myUser object
 
 
 //Fix the getMyUsername invocation (stored in the userName variable, at the bottom of the above code) so that userName will be equal to 'iliketurtles'.
